@@ -1,0 +1,14 @@
+@import 'settings/index';
+@import 'utilities/index';
+@import 'components/index';
+@import 'layouts/index';
+@import 'views/index';
+
+// reset css
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+// app css

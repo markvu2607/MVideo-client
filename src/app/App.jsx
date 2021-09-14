@@ -1,8 +1,8 @@
-import './App.css';
+import 'styles/_App.scss'
 
 function App() {
   return (
-    <div className="App">
+    <div className="text-danger">
       This is MAudio
     </div>
   );
