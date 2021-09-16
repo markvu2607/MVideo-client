@@ -1,0 +1,21 @@
+.video {
+  border: 1px solid #555;
+  border-radius: 8px;
+  padding: 120px 24px;
+  position: relative;
+
+  &::before {
+    content: "";
+    position: absolute;
+    width: 3px;
+    height: 60%;
+    background-color: $background-color-app;
+    top: 50%;
+    right: 0;
+    transform: translateY(-50%) translateX(2px);
+  }
+}
+
+.play-list {
+  background-color: #ccc;
+}
