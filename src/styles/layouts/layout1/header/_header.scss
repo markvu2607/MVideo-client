@@ -1,0 +1,72 @@
+header {
+  height: $header-height;
+  color: $font-color-base;
+  border-bottom: 1px solid #333;
+
+  & div {
+    display: flex;
+
+    & img.logo {
+      height: $header-height;
+      margin-right: 24px;
+    }
+
+    & .my-navbar-pc {
+      align-items: center;
+
+      button+button {
+        margin: 24px;
+      }
+    }
+  }
+
+  & button {
+    background-color: #deb253;
+    padding: 8px 32px;
+    border-radius: 50px;
+    border: none;
+
+    &:hover {
+      opacity: 0.8;
+    }
+  }
+
+  & .my-navbar-mb {
+    width: 80%;
+    height: 100vh;
+    position: fixed;
+    top: 0;
+    right: 0;
+    background-color: red;
+    display: none;
+    z-index: 2;
+    transform: translateX(100%);
+  }
+
+  & .cover-layer {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vh;
+    height: 100vh;
+    background-color: black;
+    opacity: 0;
+    z-index: 1;
+    transition: opacity 1s linear;
+    transform: translateX(100%);
+  }
+}
+
+@media screen and (max-width: 740px) {
+  header {
+    & .my-navbar-mb {
+      display: block;
+    }
+
+    & .cover-layer {
+      display: block;
+      opacity: 0.8;
+    }
+  }
+}
