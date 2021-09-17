@@ -37,10 +37,28 @@ header {
     position: fixed;
     top: 0;
     right: 0;
-    background-color: red;
+    background-color: white;
+    color: #333;
     display: none;
     z-index: 2;
-    transform: translateX(100%);
+    animation: slideToLeft 0.5s ease forwards;
+
+    & .close-icon {
+      position: absolute;
+      top: 8px;
+      right: 8px;
+    }
+
+    & ul {
+      list-style-type: none;
+      margin-top: 48px;
+
+      & li {
+        font-size: 24px;
+        border-bottom: 1px solid #ccc;
+      }
+
+    }
   }
 
   & .cover-layer {
@@ -53,13 +71,28 @@ header {
     background-color: black;
     opacity: 0;
     z-index: 1;
-    transition: opacity 1s linear;
-    transform: translateX(100%);
+  }
+
+  & .menu-mb {
+    display: none;
+    cursor: pointer;
   }
 }
 
-@media screen and (max-width: 740px) {
+@media screen and (max-width: 767px) {
   header {
+
+    & div {
+
+      & .my-navbar-pc {
+        display: none;
+      }
+    }
+
+    & button {
+      display: none;
+    }
+
     & .my-navbar-mb {
       display: block;
     }
@@ -68,5 +101,36 @@ header {
       display: block;
       opacity: 0.8;
     }
+
+    & .menu-mb {
+      display: block;
+    }
   }
+}
+
+@keyframes slideToLeft {
+  from {
+    transform: translateX(100%);
+    opacity: 0;
+  }
+
+  to {
+    transform: translateX(0);
+    opacity: 1;
+  }
+}
+
+@keyframes slideToRight {
+
+  from {
+    transform: translateX(0);
+    opacity: 1;
+  }
+
+  to {
+    transform: translateX(100%);
+    opacity: 0;
+  }
+
+
 }
