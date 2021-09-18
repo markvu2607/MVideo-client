@@ -17,3 +17,21 @@
   font-family: Tahoma, Verdana, sans-serif;
   min-height: 100vh;
 }
+
+::-webkit-scrollbar {
+  width: 7px;
+
+}
+
+::-webkit-scrollbar-track {
+  background: #333;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #deb253;
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #c78b0a;
+}

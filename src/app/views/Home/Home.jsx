@@ -6,18 +6,30 @@ const Home = () => {
 
   const [songs, setSongs] = useState([]);
   const [currentSong, setCurrentSong] = useState({});
+  const [videoState, setVideoState] = useState({ isMute: 1 })
 
   useEffect(() => {
     setSongs(songsDB)
     setCurrentSong(currentSongDB)
   }, []);
 
+  useEffect(() => {
+    setTimeout(() => {
+      if (songs[0]) {
+        const song = songs[0]
+        songs.shift()
+        setSongs(songs)
+        setCurrentSong(song)
+      }
+    }, (currentSong.time - currentSong.currentTime + 5) * 1000)
+  }, [currentSong])
+
   return (
     <div className="container mt-4">
       <div className="row">
         <div className="col-lg-8">
           <div className="video">
-            <iframe className="w-100" height="360" src={`https://www.youtube.com/embed/${currentSong.id}?start=${currentSong.currentTime}&mute=1&autoplay=1`} title="YouTube video player" frameBorder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowFullScreen></iframe>
+            <iframe className="w-100" height="360" src={`https://www.youtube.com/embed/${currentSong.id}?start=${currentSong.currentTime}&mute=${videoState.isMute}&autoplay=1`}></iframe>
           </div>
         </div>
         <div className="col-lg-4">
@@ -37,6 +49,9 @@ const Home = () => {
         </div>
       </div>
     </div>
+
+
+
   )
 }
 

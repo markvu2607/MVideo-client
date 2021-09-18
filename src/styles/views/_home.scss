@@ -13,10 +13,14 @@
     top: 50%;
     right: 0;
     transform: translateY(-50%) translateX(2px);
+    z-index: 1;
   }
 }
 
 .play-list {
   background-color: #222;
   color: white;
+  height: 608px;
+  overflow-y: scroll;
+  overflow-x: hidden;
 }

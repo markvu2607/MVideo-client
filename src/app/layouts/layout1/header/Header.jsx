@@ -1,8 +1,10 @@
 import { useState } from 'react'
+import SearchBox from './SearchBox'
 
 const Header = () => {
 
-  const [shouldOpenNavbarMb, setShouldOpenNavbarMb] = useState(false);
+  const [shouldOpenNavbarMb, setShouldOpenNavbarMb] = useState(false)
+  const [shouldOpenSearchBox, setShouldOpenSearchBox] = useState(false)
 
   const toggleNavBarMb = () => {
     setShouldOpenNavbarMb(!shouldOpenNavbarMb)
@@ -13,6 +15,10 @@ const Header = () => {
     setTimeout(() => {
       toggleNavBarMb()
     }, 500)
+  }
+
+  const closeSearhBox = () => {
+    setShouldOpenSearchBox(!setShouldOpenSearchBox)
   }
 
   return (
@@ -26,7 +32,10 @@ const Header = () => {
           className="logo"
         />
         <div className="my-navbar-pc">
-          <button className="btn btn-dark">
+          <button
+            className="btn btn-dark"
+            onClick={() => setShouldOpenSearchBox(!shouldOpenSearchBox)}
+          >
             Search
           </button>
           <button className="btn btn-dark">
@@ -63,6 +72,12 @@ const Header = () => {
         <div
           onClick={closeNavbarMb}
           className="cover-layer"></div>
+      }
+
+      {shouldOpenSearchBox &&
+        <SearchBox
+          onClose={closeSearhBox}
+        />
       }
 
 
