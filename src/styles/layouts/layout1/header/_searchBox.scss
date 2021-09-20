@@ -48,14 +48,21 @@
     }
 
     & .list-search {
-      display: flex;
-      flex-direction: column;
-      justify-content: space-between;
-      margin-top: 48px;
-      margin-bottom: 24px;
+      display: block;
 
       flex-grow: 1;
     }
   }
+
+}
+
+@media screen and (max-width: 767px) {
+
+  .search-box {
+    & .search-view {
+      width: 80%;
+    }
+  }
+
 
 }
