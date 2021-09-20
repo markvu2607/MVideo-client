@@ -1,0 +1,11 @@
+.item-search {
+  margin-top: 24px;
+  max-height: 71px;
+
+  & div b {
+    width: 100%;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+}

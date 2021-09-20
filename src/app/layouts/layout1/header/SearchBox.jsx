@@ -2,20 +2,43 @@ import ytbApis from "app/apis/ytbApis/index"
 import { useState } from "react"
 import ItemSearch from "app/components/ItemSearch/ItemSearch";
 
+
 const SearchBox = (props) => {
 
   const [qSearch, setQSearch] = useState("");
   const [searchList, setSearchList] = useState([])
 
   const search = async () => {
-    const response = await ytbApis.get('/search', {
+    const listVideoSearch = await ytbApis.get('/search', {
       params: {
         q: qSearch
       }
+    }).then(async ({ data }) => {
+      const listVideoSearch = data.items
+      for (const index in listVideoSearch) {
+        const videoId = listVideoSearch[index].id.videoId
+        const video = await getVideoById(videoId)
+        const itemNew = {
+          id: listVideoSearch[index].id.videoId,
+          img: listVideoSearch[index].snippet.thumbnails.default.url,
+          title: listVideoSearch[index].snippet.title,
+          duration: video.contentDetails.duration.replace('PT', '').toLowerCase()
+        }
+        listVideoSearch[index] = itemNew
+      }
+      return listVideoSearch
     })
+    setSearchList(listVideoSearch)
+  }
 
-    console.log(response)
-    setSearchList(response.data.items)
+  const getVideoById = async (id) => {
+    const res = await ytbApis.get('/videos', {
+      params: {
+        id: id,
+        part: "contentDetails"
+      }
+    })
+    return res.data.items[0]
   }
 
   const handleChangeInputSearch = (event) => {
@@ -44,13 +67,15 @@ const SearchBox = (props) => {
           </button>
         </div>
         <div className="list-search">
-          {searchList.map((item, index) => (
-            <ItemSearch
+          {searchList.map(
+            (item, index) => <ItemSearch
               key={index}
-              img={item.snippet.thumbnails.default.url}
-              title={item.snippet.title}
+              idVideo={item.id}
+              img={item.img}
+              title={item.title}
+              duration={item.duration}
             />
-          ))}
+          )}
         </div>
       </div>
     </div>
