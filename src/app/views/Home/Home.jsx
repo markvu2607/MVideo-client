@@ -1,47 +1,63 @@
 import { useState, useEffect } from "react"
 import VideoCard from "app/components/VideoCard/VideoCard"
-import { songsDB, currentSongDB } from "fake-db";
+import { connect } from "react-redux"
+import { nextVideo } from "app/redux/actions/PlayListActions"
+import YouTube from "react-youtube"
 
-const Home = () => {
 
-  const [songs, setSongs] = useState([]);
-  const [currentSong, setCurrentSong] = useState({});
+const Home = (props) => {
+
+  const [videos, setVideos] = useState([]);
+  const [currentVideo, setCurrentVideo] = useState({});
   const [videoState, setVideoState] = useState({ isMute: 1 })
 
-  useEffect(() => {
-    setSongs(songsDB)
-    setCurrentSong(currentSongDB)
-  }, []);
+  const opts = {
+    height: '360',
+    playerVars: {
+      mute: videoState.isMute,
+      autoplay: 1
+    }
+  }
 
   useEffect(() => {
-    setTimeout(() => {
-      if (songs[0]) {
-        const song = songs[0]
-        songs.shift()
-        setSongs(songs)
-        setCurrentSong(song)
-      }
-    }, (currentSong.time - currentSong.currentTime + 5) * 1000)
-  }, [currentSong])
+    setVideos(props.playList.videosRedux)
+    setCurrentVideo(props.playList.currentVideoRedux)
+  });
+
+  const onReadyYtb = (event) => {
+    event.target.playVideo()
+  }
+
+  const onEndYtb = (event) => {
+    if (videos[0]) {
+      setVideoState({ isMute: event.target.isMuted() })
+      props.nextVideo()
+    }
+  }
+
 
   return (
     <div className="container mt-4">
       <div className="row">
         <div className="col-lg-8">
           <div className="video">
-            <iframe className="w-100" height="360" src={`https://www.youtube.com/embed/${currentSong.id}?start=${currentSong.currentTime}&mute=${videoState.isMute}&autoplay=1`}></iframe>
+            <YouTube
+              className="w-100"
+              videoId={currentVideo.id}
+              opts={opts}
+              onReady={onReadyYtb}
+              onEnd={onEndYtb}
+            />
           </div>
         </div>
         <div className="col-lg-4">
           <div className="play-list">
             {
-              songs.map((song, index) =>
+              videos.map((video, index) =>
                 <VideoCard
                   key={index}
                   stt={index + 1}
-                  name={song.name}
-                  suggester={song.suggester}
-                  img={song.img}
+                  video={video}
                 />
               )
             }
@@ -49,10 +65,19 @@ const Home = () => {
         </div>
       </div>
     </div>
-
-
-
   )
 }
 
-export default Home
+const mapStatetoProps = (state) => {
+  return {
+    playList: state.playlist
+  }
+}
+
+const mapDispatchToProps = (dispatch) => {
+  return {
+    nextVideo: () => nextVideo(dispatch)
+  }
+}
+
+export default connect(mapStatetoProps, mapDispatchToProps)(Home)

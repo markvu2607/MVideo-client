@@ -1,12 +1,16 @@
 import ytbApis from "app/apis/ytbApis/index"
-import { useState } from "react"
+import { useState, useEffect } from "react"
 import ItemSearch from "app/components/ItemSearch/ItemSearch";
+import { convert_time } from "app/utils";
+import { connect } from "react-redux";
+import { addVideo } from "app/redux/actions/PlayListActions";
 
 
 const SearchBox = (props) => {
 
   const [qSearch, setQSearch] = useState("");
   const [searchList, setSearchList] = useState([])
+
 
   const search = async () => {
     const listVideoSearch = await ytbApis.get('/search', {
@@ -22,7 +26,7 @@ const SearchBox = (props) => {
           id: listVideoSearch[index].id.videoId,
           img: listVideoSearch[index].snippet.thumbnails.default.url,
           title: listVideoSearch[index].snippet.title,
-          duration: video.contentDetails.duration.replace('PT', '').toLowerCase()
+          duration: convert_time(video.contentDetails.duration)
         }
         listVideoSearch[index] = itemNew
       }
@@ -43,6 +47,20 @@ const SearchBox = (props) => {
 
   const handleChangeInputSearch = (event) => {
     setQSearch(event.target.value)
+  }
+
+  const handleAddVideo = (video) => {
+    const playList = props.playList
+    if (playList.currentVideoRedux.id != video.id
+      && playList.videosRedux.filter((videoRedux) => videoRedux.id == video.id).length == 0) {
+      props.addVideo(video)
+      alert('Thêm thành công')
+    }
+    else {
+      alert('Đang phát video này')
+    }
+
+
   }
 
   return (
@@ -70,10 +88,8 @@ const SearchBox = (props) => {
           {searchList.map(
             (item, index) => <ItemSearch
               key={index}
-              idVideo={item.id}
-              img={item.img}
-              title={item.title}
-              duration={item.duration}
+              video={item}
+              handleAddVideo={handleAddVideo}
             />
           )}
         </div>
@@ -82,4 +98,16 @@ const SearchBox = (props) => {
   )
 }
 
-export default SearchBox
+const mapStateToProps = (state) => {
+  return {
+    playList: state.playlist
+  }
+}
+
+const mapDispatchToProps = (dispatch) => {
+  return {
+    addVideo: (video) => addVideo(video, dispatch)
+  }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(SearchBox)
