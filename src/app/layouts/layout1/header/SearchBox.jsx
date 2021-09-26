@@ -3,7 +3,6 @@ import { useState, useEffect } from "react"
 import ItemSearch from "app/components/ItemSearch/ItemSearch";
 import { connect } from "react-redux";
 import { addVideo } from "app/redux/actions/PlayListActions";
-import { logDOM } from "@testing-library/dom";
 
 
 const SearchBox = (props) => {
@@ -13,6 +12,7 @@ const SearchBox = (props) => {
 
 
   const handleSearch = async () => {
+    setSearchList(null)
     const listVideoSearch = await searchByQ(qSearch)
     setSearchList(listVideoSearch)
   }
@@ -57,13 +57,19 @@ const SearchBox = (props) => {
           </button>
         </div>
         <div className="list-search">
-          {searchList.map(
-            (item, index) => <ItemSearch
-              key={index}
-              video={item}
-              handleAddVideo={handleAddVideo}
-            />
-          )}
+          {searchList ?
+            searchList.map(
+              (item, index) => <ItemSearch
+                key={index}
+                video={item}
+                handleAddVideo={handleAddVideo}
+              />
+            ) :
+            <div class="h-100 d-flex justify-content-center align-items-center">
+              <div className="spinner-border">
+                <span className="sr-only"></span>
+              </div>
+            </div>}
         </div>
       </div>
     </div>

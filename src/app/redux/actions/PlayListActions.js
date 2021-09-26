@@ -4,7 +4,6 @@ export const PLAY_VIDEO = 'PLAY_VIDEO'
 export const DELETE_VIDEO = 'DELETE_VIDEO'
 
 export const addVideo = (video, dispatch) => {
-  video.currentTime = 0
   dispatch({ type: ADD_VIDEO, payload: video })
 }
 

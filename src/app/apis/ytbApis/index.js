@@ -38,7 +38,12 @@ export const searchByQ = async (q) => {
         id: listVideoSearch[index].id.videoId,
         img: listVideoSearch[index].snippet.thumbnails.default.url,
         title: listVideoSearch[index].snippet.title,
-        duration: convert_time(video.contentDetails.duration)
+        duration: convert_time(video.contentDetails.duration) < 3600 ?
+          new Date(convert_time(video.contentDetails.duration) * 1000)
+            .toISOString().substr(14, 5) :
+          new Date(convert_time(video.contentDetails.duration) * 1000)
+            .toISOString().substr(11, 8),
+        channelTitle: listVideoSearch[index].snippet.channelTitle
       }
       listVideoSearch[index] = itemNew
     }

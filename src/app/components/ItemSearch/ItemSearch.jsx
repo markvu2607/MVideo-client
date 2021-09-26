@@ -11,10 +11,11 @@ const ItemSearch = ({ video, handleAddVideo }) => {
       />
       <div className="col-lg-8 col-mb-8 flex-column mt-2">
         <b>{video.title}</b>
+        <p>Channel: {video.channelTitle}</p>
         <p>Duration: {video.duration}</p>
       </div>
       <button
-        className="btn btn-primary col-lg-2 col-mb-1"
+        className="btn btn-primary col-lg-2 col-mb-2"
         onClick={() => handleAddVideo(video)}
       >
         Add to list

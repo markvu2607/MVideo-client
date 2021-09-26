@@ -19,7 +19,7 @@ const VideoCard = ({ video, stt, handlePlayVideo, handleDeleteVideo }) => {
         >
           {video.title}
         </h6>
-        <p>Channel: {video.channel ? video.channel : "Vu Van Minh"}</p>
+        <p>Channel: {video.channelTitle}</p>
         <p>Duration: {video.duration ? video.duration : 0}</p>
       </div>
       <div
