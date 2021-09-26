@@ -1,4 +1,9 @@
-import { ADD_VIDEO, NEXT_VIDEO, PLAY_VIDEO } from "../actions/PlayListActions"
+import {
+  ADD_VIDEO,
+  DELETE_VIDEO,
+  NEXT_VIDEO,
+  PLAY_VIDEO
+} from "../actions/PlayListActions"
 
 const initialState = {
   currentVideoRedux: {
@@ -38,6 +43,13 @@ const PlayListReducer = (state = initialState, action) => {
       return {
         ...state,
         currentVideoRedux,
+        videosRedux
+      }
+    }
+    case DELETE_VIDEO: {
+      const videosRedux = state.videosRedux.filter((video) => video.id !== action.payload.id)
+      return {
+        ...state,
         videosRedux
       }
     }

@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react"
 import VideoCard from "app/components/VideoCard/VideoCard"
 import { connect } from "react-redux"
-import { nextVideo, playVideo } from "app/redux/actions/PlayListActions"
+import { nextVideo, playVideo, deleteVideo } from "app/redux/actions/PlayListActions"
 import YouTube from "react-youtube"
 
 
@@ -40,6 +40,10 @@ const Home = (props) => {
     props.playVideo(video)
   }
 
+  const handleDeleteVideo = (video) => {
+    props.deleteVideo(video)
+  }
+
 
   return (
     <div className="container mt-4">
@@ -71,6 +75,7 @@ const Home = (props) => {
                 stt={index + 1}
                 video={video}
                 handlePlayVideo={handlePlayVideo}
+                handleDeleteVideo={handleDeleteVideo}
               />
             )}
           </div>
@@ -89,7 +94,8 @@ const mapStatetoProps = (state) => {
 const mapDispatchToProps = (dispatch) => {
   return {
     nextVideo: () => nextVideo(dispatch),
-    playVideo: (video) => playVideo(video, dispatch)
+    playVideo: (video) => playVideo(video, dispatch),
+    deleteVideo: (video) => deleteVideo(video, dispatch)
   }
 }
 
