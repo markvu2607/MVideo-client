@@ -1,25 +1,16 @@
 import { ADD_VIDEO, NEXT_VIDEO, PLAY_VIDEO } from "../actions/PlayListActions"
 
 const initialState = {
-  // currentVideoRedux: {
-  //   id: "8bBmDAtHUJY",
-  //   title: "a",
-  //   duration: 260
-  // },
-  // videosRedux: [
-  //   {
-  //     id: "kTJczUoc26U",
-  //     title: "The Kid LAROI, Justin Bieber - STAY (Official Video)",
-  //     duration: 158,
-  //     img: "https://i.ytimg.com/vi/4JbCxj3J48o/default.jpg"
-  //   },
-  //   {
-  //     id: "FLGCGc7sAUw",
-  //     title: "Bella Poarch - Build a B*tch (Official Music Video)",
-  //     duration: 169,
-  //     img: "https://i.ytimg.com/vi/4JbCxj3J48o/default.jpg"
-  //   }
-  // ]
+  currentVideoRedux: {
+    // id: "xypzmu5mMPY"
+  },
+  videosRedux: [
+    // {
+    //   id: "S7KA4tQ483o",
+    //   title: "HIEUTHUHAI - SINH NHẬT (prod. by Wonderlust)",
+    //   img: "https://i.ytimg.com/vi/S7KA4tQ483o/default.jpg"
+    // }
+  ]
 }
 
 const PlayListReducer = (state = initialState, action) => {

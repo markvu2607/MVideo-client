@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react"
 import VideoCard from "app/components/VideoCard/VideoCard"
 import { connect } from "react-redux"
-import { nextVideo } from "app/redux/actions/PlayListActions"
+import { nextVideo, playVideo } from "app/redux/actions/PlayListActions"
 import YouTube from "react-youtube"
 
 
@@ -16,6 +16,7 @@ const Home = (props) => {
     playerVars: {
       mute: videoState.isMute,
       autoplay: 1
+      // origin: 'http://localhost:3000'
     }
   }
 
@@ -35,32 +36,43 @@ const Home = (props) => {
     }
   }
 
+  const handlePlayVideo = (video) => {
+    props.playVideo(video)
+  }
+
 
   return (
     <div className="container mt-4">
       <div className="row">
         <div className="col-lg-8">
           <div className="video">
-            <YouTube
-              className="w-100"
-              videoId={currentVideo.id}
-              opts={opts}
-              onReady={onReadyYtb}
-              onEnd={onEndYtb}
-            />
+            {currentVideo.id ?
+              <YouTube
+                className="w-100"
+                videoId={currentVideo.id}
+                opts={opts}
+                onReady={onReadyYtb}
+                onEnd={onEndYtb}
+              /> :
+              <img
+                src={`${process.env.PUBLIC_URL}/assets/img/icon-ytb.png`}
+                height="360px"
+                className="w-100"
+                alt=""
+              />
+            }
           </div>
         </div>
         <div className="col-lg-4">
           <div className="play-list">
-            {
-              videos.map((video, index) =>
-                <VideoCard
-                  key={index}
-                  stt={index + 1}
-                  video={video}
-                />
-              )
-            }
+            {videos.map((video, index) =>
+              <VideoCard
+                key={index}
+                stt={index + 1}
+                video={video}
+                handlePlayVideo={handlePlayVideo}
+              />
+            )}
           </div>
         </div>
       </div>
@@ -76,7 +88,8 @@ const mapStatetoProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    nextVideo: () => nextVideo(dispatch)
+    nextVideo: () => nextVideo(dispatch),
+    playVideo: (video) => playVideo(video, dispatch)
   }
 }
 

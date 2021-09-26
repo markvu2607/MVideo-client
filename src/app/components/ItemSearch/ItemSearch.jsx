@@ -1,18 +1,6 @@
-import { useState, useEffect } from "react"
 
 
-
-const ItemSearch = (props) => {
-
-  const [video, setVideo] = useState({});
-
-  useEffect(() => {
-    setVideo(props.video)
-  }, [])
-
-  const handleAddVideo = () => {
-    props.handleAddVideo(video)
-  }
+const ItemSearch = ({ video, handleAddVideo }) => {
 
   return (
     <div className="row px-4 item-search">
@@ -27,7 +15,7 @@ const ItemSearch = (props) => {
       </div>
       <button
         className="btn btn-primary col-lg-2 col-mb-1"
-        onClick={handleAddVideo}
+        onClick={() => handleAddVideo(video)}
       >
         Add to list
       </button>
