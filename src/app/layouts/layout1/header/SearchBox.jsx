@@ -21,6 +21,12 @@ const SearchBox = (props) => {
     setQSearch(event.target.value)
   }
 
+  const handleKeyPress = (event) => {
+    if (event.key === 'Enter') {
+      handleSearch()
+    }
+  }
+
   const handleAddVideo = (video) => {
     const playList = props.playList
     if (playList.currentVideoRedux.id != video.id
@@ -31,8 +37,6 @@ const SearchBox = (props) => {
     else {
       alert('Đang phát video này')
     }
-
-
   }
 
   return (
@@ -49,6 +53,7 @@ const SearchBox = (props) => {
             type="text"
             placeholder="Search..."
             onChange={handleChangeInputSearch}
+            onKeyPress={handleKeyPress}
           />
           <button type="button" onClick={handleSearch} >
             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" className="bi bi-search" viewBox="0 0 16 16">
