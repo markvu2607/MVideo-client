@@ -70,7 +70,7 @@ const SearchBox = (props) => {
                 handleAddVideo={handleAddVideo}
               />
             ) :
-            <div class="h-100 d-flex justify-content-center align-items-center">
+            <div className="h-100 d-flex justify-content-center align-items-center">
               <div className="spinner-border">
                 <span className="sr-only"></span>
               </div>
