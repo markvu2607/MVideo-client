@@ -31,6 +31,28 @@ header {
     }
   }
 
+  & .user-info {
+    display: flex;
+    flex-direction: column;
+    text-align: end;
+
+    & .user-name {
+      & span {
+        font-weight: 700;
+      }
+    }
+
+    & .btn-logout {
+      font-size: 12px;
+      display: block;
+
+      &:hover {
+        text-decoration: underline;
+        cursor: pointer;
+      }
+    }
+  }
+
   & .my-navbar-mb {
     width: 80%;
     height: 100vh;

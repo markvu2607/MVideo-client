@@ -1,15 +1,20 @@
 import { useState, useEffect } from "react"
 import VideoCard from "app/components/VideoCard/VideoCard"
-import { connect } from "react-redux"
 import { nextVideo, playVideo, deleteVideo } from "app/redux/actions/PlayListActions"
 import YouTube from "react-youtube"
+import { useDispatch, useSelector } from 'react-redux'
+import { VideosReduxSelector, CurrentVideoReduxSelector } from '../../redux/selectors'
 
 
-const Home = (props) => {
+const Home = () => {
 
   const [videos, setVideos] = useState([]);
   const [currentVideo, setCurrentVideo] = useState({});
   const [videoState, setVideoState] = useState({ isMute: 1 })
+
+  const dispatch = useDispatch();
+  const videosReduxSelector = useSelector(VideosReduxSelector)
+  const currentVideoReduxSelector = useSelector(CurrentVideoReduxSelector)
 
   const opts = {
     height: '360',
@@ -21,9 +26,9 @@ const Home = (props) => {
   }
 
   useEffect(() => {
-    setVideos(props.playList.videosRedux)
-    setCurrentVideo(props.playList.currentVideoRedux)
-  });
+    setVideos(videosReduxSelector)
+    setCurrentVideo(currentVideoReduxSelector)
+  }, [videosReduxSelector, currentVideoReduxSelector]);
 
   const onReadyYtb = (event) => {
     event.target.playVideo()
@@ -32,16 +37,16 @@ const Home = (props) => {
   const onEndYtb = (event) => {
     if (videos[0]) {
       setVideoState({ isMute: event.target.isMuted() })
-      props.nextVideo()
+      dispatch(nextVideo())
     }
   }
 
   const handlePlayVideo = (video) => {
-    props.playVideo(video)
+    dispatch(playVideo(video))
   }
 
   const handleDeleteVideo = (video) => {
-    props.deleteVideo(video)
+    dispatch(deleteVideo(video))
   }
 
 
@@ -85,18 +90,4 @@ const Home = (props) => {
   )
 }
 
-const mapStatetoProps = (state) => {
-  return {
-    playList: state.playlist
-  }
-}
-
-const mapDispatchToProps = (dispatch) => {
-  return {
-    nextVideo: () => nextVideo(dispatch),
-    playVideo: (video) => playVideo(video, dispatch),
-    deleteVideo: (video) => deleteVideo(video, dispatch)
-  }
-}
-
-export default connect(mapStatetoProps, mapDispatchToProps)(Home)
+export default Home

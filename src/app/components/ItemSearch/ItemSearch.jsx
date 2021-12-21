@@ -9,7 +9,7 @@ const ItemSearch = ({ video, handleAddVideo }) => {
         src={video.img}
         className="col-lg-2 col-mb-2"
       />
-      <div className="col-lg-8 col-mb-8 flex-column mt-2">
+      <div className="col-lg-8 col-mb-8 flex-column mt-1">
         <b>{video.title}</b>
         <p>Channel: {video.channelTitle}</p>
         <p>Duration: {video.duration}</p>

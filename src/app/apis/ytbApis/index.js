@@ -2,14 +2,13 @@
 import axios from "axios"
 import { convert_time } from "app/utils"
 
-const KEY = "AIzaSyAbQ35gGbTvy4yV5FPMfjzEFvydufU82kA"
 const ytbApis = axios.create(
   {
     baseURL: "https://www.googleapis.com/youtube/v3/",
     params: {
       part: "snippet",
       maxResults: 5,
-      key: KEY
+      key: process.env.REACT_APP_YTB_API_KEY
     }
   }
 )

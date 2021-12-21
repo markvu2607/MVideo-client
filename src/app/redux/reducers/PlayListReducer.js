@@ -21,11 +21,13 @@ const initialState = {
 const PlayListReducer = (state = initialState, action) => {
   switch (action.type) {
     case ADD_VIDEO: {
-      const videosRedux = state.videosRedux
-      videosRedux.push(action.payload)
       return {
         ...state,
-        videosRedux
+        videosRedux: [
+          ...state.videosRedux,
+          action.payload
+        ]
+
       }
     }
     case NEXT_VIDEO: {

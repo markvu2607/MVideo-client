@@ -1,10 +1,10 @@
 import Header from "./header/Header"
 
-const Layout1 = (props) => {
+const Layout1 = ({ children }) => {
   return (
     <>
       <Header />
-      {props.children}
+      {children}
     </>
   )
 }

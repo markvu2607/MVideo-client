@@ -1,7 +1,10 @@
 import { useState } from 'react'
 import SearchBox from './SearchBox'
+import { useAuth0 } from '@auth0/auth0-react'
 
 const Header = () => {
+
+  const { loginWithRedirect, logout, isAuthenticated, user } = useAuth0()
 
   const [shouldOpenNavbarMb, setShouldOpenNavbarMb] = useState(false)
   const [shouldOpenSearchBox, setShouldOpenSearchBox] = useState(false)
@@ -21,6 +24,14 @@ const Header = () => {
     setShouldOpenSearchBox(!setShouldOpenSearchBox)
   }
 
+  const handleClickSearch = () => {
+    if (isAuthenticated) {
+      setShouldOpenSearchBox(!shouldOpenSearchBox)
+    } else {
+      loginWithRedirect()
+    }
+  }
+
   return (
     <header
       className="d-flex justify-content-between align-items-center"
@@ -34,12 +45,9 @@ const Header = () => {
         <div className="my-navbar-pc">
           <button
             className="btn btn-dark"
-            onClick={() => setShouldOpenSearchBox(!shouldOpenSearchBox)}
+            onClick={handleClickSearch}
           >
             Search
-          </button>
-          <button className="btn btn-dark">
-            Play list
           </button>
         </div>
       </div>
@@ -49,9 +57,15 @@ const Header = () => {
       >
         <path fillRule="evenodd" d="M2.5 12a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5zm0-4a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5zm0-4a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5z" />
       </svg>
-      <button>
-        Login
-      </button>
+      {!isAuthenticated ?
+        <button onClick={() => loginWithRedirect()}>
+          Login
+        </button> :
+        <div className='user-info'>
+          <div className='user-name'> Hi, <span>{user.name}</span></div>
+          <div className='btn-logout' onClick={() => logout()}>Logout</div>
+        </div>
+      }
 
       {shouldOpenNavbarMb &&
         <div className="my-navbar-mb">
